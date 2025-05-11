@@ -1,15 +1,10 @@
 import { useState } from "react"
 import { useLocalStorage } from "../hooks/useLocalStorage"
-
-type Task = {
-    title: string
-    description: string
-    status: "En attente" | "En cours" | "Terminée"
-    endDate: Date
-}
+import type { Task } from "../types/TaskType"
 
 export const TaskForm: React.FC = () => {
     const [task, setTask] = useState<Task>({
+        id: Math.random(),
         title: "",
         description: "",
         status: "En attente",
@@ -40,6 +35,7 @@ export const TaskForm: React.FC = () => {
         setTasks([...tasks, newTask])
 
         setTask({
+            id: Math.random(),
             title: "",
             description: "",
             status: "En attente",
