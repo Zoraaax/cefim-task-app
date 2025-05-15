@@ -28,7 +28,12 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onStatusChan
             <p className="mt-2">Status: {task.status}</p>
             <p className="mt-2">Date de fin: {new Date(task.endDate).toLocaleDateString()}</p>
             <button onClick={() => setIsDeletePopupOpen(true)}><FaTrash /></button>
-            <DeletePopup id={task.id} onDelete={handleDelete} onCancel={handleCancel} isOpen={isDeletePopupOpen} />
+            <DeletePopup 
+                id={task.id} 
+                onDelete={handleDelete} 
+                onCancel={handleCancel} 
+                isOpen={isDeletePopupOpen} 
+            />
             <select value={task.status} onChange={(e) => onStatusChange(task.id, e.target.value as Task["status"])}>
                 <option value="En attente">En attente</option>
                 <option value="En cours">En cours</option>
