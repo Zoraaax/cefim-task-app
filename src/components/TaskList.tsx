@@ -3,6 +3,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage"
 import type { Task } from "../types/TaskType"
 import { TaskItem } from "./TaskItem"
 import SearchBar from "./SearchBar"
+import { ProgressBar } from "./ProgressBar"
 
 export const TaskList: React.FC = () => {
     const [tasks, setTasks] = useLocalStorage<Task[]>("tasks", [])
@@ -36,6 +37,18 @@ export const TaskList: React.FC = () => {
         .filter((task) => 
             task.title.toLowerCase().includes(searchQuery.toLowerCase())
         )
+    
+    const progress = filteredTasks.reduce((acc, task) => {
+        if (task.status === "Terminée") {
+            return acc + 1
+        }
+        return acc
+    }, 0) / filteredTasks.length
+    
+    const progressPercentage = () => {
+        if (filteredTasks.length === 0) return "Aucune tâche en cours"
+        return Math.round((progress * 100) / filteredTasks.length) + "%"
+    }
 
     return (
         <div>
@@ -46,6 +59,7 @@ export const TaskList: React.FC = () => {
                 <button onClick={() => setStatusFilter("En cours")}>En cours</button>
                 <button onClick={() => setStatusFilter("Terminée")}>Terminée</button>
             </div>
+            <ProgressBar progress={progress} progressPercentage={progressPercentage()} />
             <SearchBar onSearch={handleSearch} />
             {filteredTasks.map((task) => (
                 <TaskItem 
