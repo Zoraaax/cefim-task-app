@@ -2,10 +2,12 @@ import { useState } from "react"
 import { useLocalStorage } from "../hooks/useLocalStorage"
 import type { Task } from "../types/TaskType"
 import { TaskItem } from "./TaskItem"
+import SearchBar from "./SearchBar"
 
 export const TaskList: React.FC = () => {
     const [tasks, setTasks] = useLocalStorage<Task[]>("tasks", [])
     const [statusFilter, setStatusFilter] = useState<Task["status"] | "all">("all")
+    const [searchQuery, setSearchQuery] = useState("")
 
     const handleDelete = (id: number) => {
         const updatedTasks = tasks.filter((task) => task.id !== id)
@@ -22,9 +24,18 @@ export const TaskList: React.FC = () => {
         setTasks(updatedTask)
     }
 
-    const filteredTasks = statusFilter === "all" 
-        ? tasks 
-        : tasks.filter((task) => task.status === statusFilter)
+    const handleSearch = (query: string) => {
+        setSearchQuery(query)
+    }
+
+    const filteredTasks = tasks
+        .filter((task) => {
+            if (statusFilter === "all") return true
+            return task.status === statusFilter
+        })
+        .filter((task) => 
+            task.title.toLowerCase().includes(searchQuery.toLowerCase())
+        )
 
     return (
         <div>
@@ -35,6 +46,7 @@ export const TaskList: React.FC = () => {
                 <button onClick={() => setStatusFilter("En cours")}>En cours</button>
                 <button onClick={() => setStatusFilter("Terminée")}>Terminée</button>
             </div>
+            <SearchBar onSearch={handleSearch} />
             {filteredTasks.map((task) => (
                 <TaskItem 
                     key={task.id} 
