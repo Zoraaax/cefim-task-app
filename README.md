@@ -2,7 +2,7 @@
 
 Une application de gestion de tâches moderne et intuitive, développée avec React et TypeScript dans le cadre d'un exercice pour l'école CEFIM.
 
-![CEFIM Task App](https://zoraaax.github.io/cefim-task-app/)
+[CEFIM Task App] https://zoraaax.github.io/cefim-task-app/
 
 ## 🚀 Fonctionnalités
 
