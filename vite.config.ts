@@ -8,5 +8,5 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  base: '/cefim-taskapp/', // Remplacez par le nom de votre repo
+  base: '/cefim-task-app/',
 })
